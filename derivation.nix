@@ -13,7 +13,7 @@ with pkgs;
     status-go = callPackage ./nix/status-go { inherit target-os; inherit (xcodeenv) composeXcodeWrapper; inherit (statusMobile) xcodewrapperArgs; androidPkgs = statusMobile.androidComposition; };
     nodejs' = nodejs-10_x;
     yarn' = yarn.override { nodejs = nodejs'; };
-    nodeInputs = import ./nix/global-node-packages/output {
+    nodeInputs = import ./nix/global-node-packages {
       # The remaining dependencies come from Nixpkgs
       inherit pkgs;
       nodejs = nodejs';
