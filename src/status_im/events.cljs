@@ -1980,3 +1980,8 @@
  :bottom-sheet/hide-sheet
  (fn [cofx _]
    (bottom-sheet/hide-bottom-sheet cofx)))
+
+(handlers/register-handler-fx
+ :shake-event
+ (fn [cofx _]
+   (logging/show-logs-dialog cofx)))
