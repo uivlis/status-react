@@ -251,7 +251,7 @@
 
 (defonce messages-limit (reagent/atom initial-limit))
 
-(defonce limit-enabled? (atom true))
+(defonce limit-enabled? (reagent/atom true))
 
 (defn increment-limit [lim]
   (+ lim
@@ -344,8 +344,9 @@
                     :on-layout (fn [e]
                                  (re-frame/dispatch [:set :layout-height (-> e .-nativeEvent .-layout .-height)]))}
         [chat-toolbar current-chat public? modal?]
-        [messages-view-animation
-         [messages-view current-chat modal?]]
+        [react/text {:style {:height 14}}
+         (str "limit enabled: " @limit-enabled?)]
+        [messages-view current-chat modal?]
         (when (show-input-container? my-public-key current-chat)
           [input/container])
         (when show-stickers?
