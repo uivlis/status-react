@@ -346,7 +346,8 @@
         [chat-toolbar current-chat public? modal?]
         [react/text {:style {:height 14}}
          (str "limit enabled: " @limit-enabled?)]
-        [messages-view current-chat modal?]
+        [messages-view-animation
+         [messages-view current-chat modal?]]
         (when (show-input-container? my-public-key current-chat)
           [input/container])
         (when show-stickers?
