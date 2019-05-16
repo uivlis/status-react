@@ -1,7 +1,7 @@
 
 { buildGoPackage, go, xcodeWrapper, callPackage, stdenv, utils }:
 
-{ owner, repo, rev, version, goPackagePath, src, host,
+{ owner, repo, rev, version, goPackagePath, src, sha256, host,
 
   # desktop-only arguments
   goBuildFlags, goBuildLdFlags,
