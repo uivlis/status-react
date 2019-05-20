@@ -19,7 +19,8 @@
 (defn toolbar []
   [toolbar/toolbar nil
    [toolbar/nav-button
-    (toolbar.actions/back #(re-frame/dispatch [:update-wallet-and-nav-back]))]
+    (toolbar.actions/back #(re-frame/dispatch
+                            [:wallet.settings.ui/navigate-back-pressed]))]
    [toolbar/content-title
     (i18n/label :t/wallet-assets)]])
 
