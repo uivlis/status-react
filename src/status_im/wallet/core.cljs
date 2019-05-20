@@ -334,9 +334,9 @@
 (fx/defn handle-transaction-error
   [{:keys [db] :as cofx} {:keys [code message]}]
   (let [{:keys [on-error]} (get-in db [:wallet :send-transaction])]
-    (log/error :wallet/transaction-error
-               :code code
-               :message message)
+    (log/warn :wallet/transaction-error
+              :code code
+              :message message)
     (case code
       ;;WRONG PASSWORD
       constants/send-transaction-err-decrypt
