@@ -49,7 +49,7 @@
 
 (defn address? [s]
   (when s
-    (.isAddress dependencies/Web3.prototype s)))
+    (.isAddress (dependencies/web3-prototype) s)))
 
 (defn network->chain-id [network]
   (get-in network [:config :NetworkId]))
@@ -64,9 +64,9 @@
 
 (defn sha3
   ([s]
-   (.sha3 dependencies/Web3.prototype (str s)))
+   (.sha3 (dependencies/web3-prototype) (str s)))
   ([s opts]
-   (.sha3 dependencies/Web3.prototype (str s) (clj->js opts))))
+   (.sha3 (dependencies/web3-prototype) (str s) (clj->js opts))))
 
 (defn hex->string [s]
   (when s
@@ -92,7 +92,7 @@
     (js/parseInt s 16)))
 
 (defn int->hex [i]
-  (.toHex dependencies/Web3.prototype i))
+  (.toHex (dependencies/web3-prototype) i))
 
 (defn hex->bignumber [s]
   (money/bignumber (if (= s hex-prefix) 0 s)))
@@ -109,7 +109,7 @@
   (str (apply str (drop (count s) (repeat 64 "0"))) s))
 
 (defn string->hex [i]
-  (.fromAscii dependencies/Web3.prototype i))
+  (.fromAscii (dependencies/web3-prototype) i))
 
 (defn format-param [param]
   (if (number? param)
@@ -141,7 +141,8 @@
 (defn send-transaction [web3 params cb]
   (.sendTransaction (.-eth web3) (clj->js params) cb))
 
-(def default-transaction-gas (money/bignumber 21000))
+(defn default-transaction-gas []
+  (money/bignumber 21000))
 
 (defn gas-price [web3 cb]
   (.getGasPrice (.-eth web3) cb))
@@ -153,9 +154,9 @@
 
 (defn estimate-gas [symbol]
   (if (tokens/ethereum? symbol)
-    default-transaction-gas
+    (default-transaction-gas)
     ;; TODO(jeluard) Rely on estimateGas call
-    (.times default-transaction-gas 5)))
+    (.times (default-transaction-gas) 5)))
 
 (defn handle-error [error]
   (log/info (.stringify js/JSON error)))
